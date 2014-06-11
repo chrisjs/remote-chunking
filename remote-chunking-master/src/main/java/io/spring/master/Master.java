@@ -9,7 +9,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import java.util.Date;
 
 public class Master {
-	private static final String CONFIG = "/remote-chunking-master/resources/META-INF/config/processing-job-context.xml";
+	private static final String CONFIG = "/META-INF/spring/config/processing-job-context.xml";
 
 	public static void main(String[] args) throws Exception {
 		ApplicationContext applicationContext = new ClassPathXmlApplicationContext(CONFIG);

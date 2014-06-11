@@ -12,7 +12,7 @@
 	     http://www.springframework.org/schema/context
 	     http://www.springframework.org/schema/context/spring-context.xsd">
 
-	<context:property-placeholder location="classpath:remote-chunking-master/resources/META-INF/config/datasource.properties" />
+	<context:property-placeholder location="classpath:/META-INF/spring/config/datasource.properties" />
 
 	<jdbc:initialize-database>
 		<jdbc:script location="${batch.drop.script}"/>
