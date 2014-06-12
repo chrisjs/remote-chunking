@@ -7,21 +7,21 @@
 	<groupId>io.spring</groupId>
 	<artifactId>remote-chunking-parent</artifactId>
 	<version>1.0.0.BUILD-SNAPSHOT</version>
-        <packaging>pom</packaging>
+	<packaging>pom</packaging>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<spring.integration.version>4.0.2.RELEASE</spring.integration.version>
-		<spring.batch.version>3.0.0.RELEASE</spring.batch.version>
+		<spring.batch.version>3.1.0.BUILD-SNAPSHOT</spring.batch.version>
 		<spring.version>4.0.2.RELEASE</spring.version>
 		<log4j.version>1.2.17</log4j.version>
 		<hsqldb.version>2.3.2</hsqldb.version>
 		<commons.dbcp.version>1.4</commons.dbcp.version>
 		<activemq.version>5.9.1</activemq.version>
 	</properties>
-        <modules>
-                <module>remote-chunking-master</module>
-                <module>remote-chunking-slave</module>
-        </modules>
+	<modules>
+		<module>remote-chunking-master</module>
+		<module>remote-chunking-slave</module>
+	</modules>
 	<dependencyManagement>
 		<dependencies>
 			<dependency>

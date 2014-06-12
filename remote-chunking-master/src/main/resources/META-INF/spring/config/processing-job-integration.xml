@@ -5,12 +5,15 @@
 	   xmlns:int-jms="http://www.springframework.org/schema/integration/jms"
 	   xmlns:p="http://www.springframework.org/schema/p"
 	   xmlns:int="http://www.springframework.org/schema/integration"
+	   xmlns:batch-int="http://www.springframework.org/schema/batch-integration"
 	   xsi:schemaLocation="http://www.springframework.org/schema/beans
 	     http://www.springframework.org/schema/beans/spring-beans.xsd
 	     http://www.springframework.org/schema/integration/jms
 	     http://www.springframework.org/schema/integration/jms/spring-integration-jms.xsd
          http://www.springframework.org/schema/integration
-	     http://www.springframework.org/schema/integration/spring-integration.xsd">
+	     http://www.springframework.org/schema/integration/spring-integration.xsd
+	     http://www.springframework.org/schema/batch-integration
+	     http://www.springframework.org/schema/batch-integration/spring-batch-integration.xsd">
 
 	<bean id="connectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory"
 		  p:brokerURL="tcp://localhost:61616"/>
@@ -25,12 +28,11 @@
 
 	<int-jms:outbound-channel-adapter id="requests" destination-name="requests"/>
 
-	<bean id="chunkHandler" class="org.springframework.batch.integration.chunk.RemoteChunkHandlerFactoryBean"
-		  p:chunkWriter-ref="itemWriter" p:step-ref="process"/>
-
-	<bean id="itemWriter" class="org.springframework.batch.integration.chunk.ChunkMessageChannelItemWriter"
-		  scope="step" p:messagingOperations-ref="messagingTemplate" p:replyChannel-ref="replies"/>
-
 	<bean id="messagingTemplate" class="org.springframework.integration.core.MessagingTemplate"
 		  p:defaultChannel-ref="requests"/>
+
+	<batch-int:remote-chunking-master id="itemWriter"
+									  message-template="messagingTemplate"
+									  step="process"
+									  reply-channel="replies"/>
 </beans>

@@ -5,12 +5,15 @@
 	   xmlns:int-jms="http://www.springframework.org/schema/integration/jms"
 	   xmlns:int="http://www.springframework.org/schema/integration"
 	   xmlns:p="http://www.springframework.org/schema/p"
+	   xmlns:batch-int="http://www.springframework.org/schema/batch-integration"
 	   xsi:schemaLocation="http://www.springframework.org/schema/beans
 	     http://www.springframework.org/schema/beans/spring-beans.xsd
 	     http://www.springframework.org/schema/integration
 	     http://www.springframework.org/schema/integration/spring-integration.xsd
 	     http://www.springframework.org/schema/integration/jms
-	     http://www.springframework.org/schema/integration/jms/spring-integration-jms.xsd">
+	     http://www.springframework.org/schema/integration/jms/spring-integration-jms.xsd
+	     http://www.springframework.org/schema/batch-integration
+	     http://www.springframework.org/schema/batch-integration/spring-batch-integration.xsd">
 
 	<bean id="connectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory"
 			p:brokerURL="tcp://localhost:61616"/>
@@ -24,15 +27,11 @@
 
 	</int-jms:outbound-channel-adapter>
 
-	<int:service-activator id="serviceActivator" input-channel="requests" output-channel="replies"
-						   ref="chunkProcessorChunkHandler" method="handleChunk"/>
-
-	<bean id="chunkProcessorChunkHandler"
-		  class="org.springframework.batch.integration.chunk.ChunkProcessorChunkHandler"
-		  p:chunkProcessor-ref="chunkProcessor"/>
-
-	<bean id="chunkProcessor" class="org.springframework.batch.core.step.item.SimpleChunkProcessor"
-			p:itemProcessor-ref="itemProcessor" p:itemWriter-ref="itemWriter"/>
+	<batch-int:remote-chunking-slave id="remote-chunking-slave"
+									 input-channel="requests"
+									 output-channel="replies"
+									 item-processor="itemProcessor"
+									 item-writer="itemWriter"/>
 
 	<bean id="itemProcessor" class="io.spring.slave.processor.Processor"/>
 
