@@ -5,35 +5,19 @@
 	   xmlns:int-jms="http://www.springframework.org/schema/integration/jms"
 	   xmlns:int="http://www.springframework.org/schema/integration"
 	   xmlns:p="http://www.springframework.org/schema/p"
-	   xmlns:batch-int="http://www.springframework.org/schema/batch-integration"
 	   xsi:schemaLocation="http://www.springframework.org/schema/beans
 	     http://www.springframework.org/schema/beans/spring-beans.xsd
 	     http://www.springframework.org/schema/integration
 	     http://www.springframework.org/schema/integration/spring-integration.xsd
 	     http://www.springframework.org/schema/integration/jms
-	     http://www.springframework.org/schema/integration/jms/spring-integration-jms.xsd
-	     http://www.springframework.org/schema/batch-integration
-	     http://www.springframework.org/schema/batch-integration/spring-batch-integration.xsd">
+	     http://www.springframework.org/schema/integration/jms/spring-integration-jms.xsd">
 
 	<bean id="connectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory"
-			p:brokerURL="tcp://localhost:61616"/>
+		  p:brokerURL="${broker.url}"/>
 
 	<int:channel id="requests"/>
 	<int:channel id="replies"/>
 
 	<int-jms:message-driven-channel-adapter id="jmsIn" destination-name="requests" channel="requests"/>
-
-	<int-jms:outbound-channel-adapter id="outgoingReplies" destination-name="replies" channel="replies">
-
-	</int-jms:outbound-channel-adapter>
-
-	<batch-int:remote-chunking-slave id="remote-chunking-slave"
-									 input-channel="requests"
-									 output-channel="replies"
-									 item-processor="itemProcessor"
-									 item-writer="itemWriter"/>
-
-	<bean id="itemProcessor" class="io.spring.slave.processor.Processor"/>
-
-	<bean id="itemWriter" class="io.spring.slave.writer.Writer"/>
+	<int-jms:outbound-channel-adapter id="outgoingReplies" destination-name="replies" channel="replies"/>
 </beans>
