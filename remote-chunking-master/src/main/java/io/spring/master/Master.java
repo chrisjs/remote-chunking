@@ -23,5 +23,7 @@ public class Master {
 		JobLauncher jobLauncher = applicationContext.getBean(JobLauncher.class);
 
 		jobLauncher.run(job, new JobParameters());
+
+		System.exit(0);
 	}
 }
