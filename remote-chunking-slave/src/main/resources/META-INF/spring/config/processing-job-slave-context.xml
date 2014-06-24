@@ -11,5 +11,5 @@
 	<context:property-placeholder location="classpath:/META-INF/spring/config/application.properties"/>
 
 	<import resource="processing-job-slave.xml"/>
-	<import resource="processing-job-slave-integration.xml"/>
+	<import resource="processing-job-slave-jms.xml"/>
 </beans>

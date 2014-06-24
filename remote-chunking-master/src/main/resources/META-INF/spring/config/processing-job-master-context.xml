@@ -12,5 +12,5 @@
 
 	<import resource="datasource-beans.xml"/>
 	<import resource="processing-job-master.xml"/>
-	<import resource="processing-job-master-integration.xml"/>
+	<import resource="processing-job-master-jms.xml"/>
 </beans>
